@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #D7A630;
+        }
+        form{
+            width: 70%;
+            height: 70%;
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color:#C25F1B;
+            border-radius: 10px;
+        }
+        h1{
+            color: white;
+            font-size: 25px;
+            text-transform: uppercase;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        #input{
+            width: 15vw;
+            height: 5vh;
+            border-radius: 10px 0px 0px 10px;
+
+        }
+        .popup{
+            width: 60%;
+            height: 30%;
+            background-color: red;
+            position: fixed;
+            border-radius: 10px;
+            padding: 50px;
+            background-color: #9B1B1A;
+            color: white;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+        }
+        
+        
+        .close{
+            cursor: pointer;
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            right: 0px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            top: 0px;
+            border-radius: 10px;
+            background-color: black;
+            z-index: 100;
+        }
+        #submit{
+            width: 15vw;
+            height: 6vh;
+            border-radius:  0px 10px 10px 0px;
+            color: white;
+            background-color:#083A5D;
+            font-size: 15px;
+            border: none;
+            cursor: pointer;
+            
+        }
+    </style>    
+</head>
+<body>
+    <form>
+        <h1>Проверка слова на палиндром</h1>
+        <p><input name="text" type = 'textarea' id ='input'><input type="submit" value="Проверить" name="submit" id = 'submit'></p>
+    </form>
+
+    <script>
+        let submit = document.forms[0].submit;
+        console.log(submit);
+        submit.addEventListener('click', palindromCheck);
+
+
+        function createPopUp(){
+            let popUp = document.createElement('div');
+            popUp.classList.add('popup');
+            let closePopUp = document.createElement('span');
+            closePopUp.innerHTML = 'X';
+            closePopUp.classList.add('close');
+            popUp.append(closePopUp);
+            closePopUp.addEventListener('click', close);
+            document.body.append(popUp);
+        }
+
+        function close() {
+            let popUp = document.querySelector('.popup');
+            popUp.remove();
+        }
+
+        function palindromCheck(e){
+            e.preventDefault();
+            let word = document.forms[0].text.value; 
+		    let regExp = /^[а-яА-Я]{2,100}$/ 
+            createPopUp();
+		if(regExp.test(word)){ 
+			let word2 = word.toLowerCase().split('').reverse().join('');
+            let popUp = document.querySelector('.popup');
+            let div = document.createElement('div');
+			if (word == word2){
+                
+                div.innerHTML = `Слово "${word}" является палиндромом`;
+                
+			} 
+            else{
+				div.innerHTML = `Слово "${word}" не является палиндромом`;
+			}
+            popUp.append(div);
+	    }
+	    else{
+            let popUp = document.querySelector('.popup');
+            let div = document.createElement('div');
+            div.innerHTML = `Введите корректное слово на русском языке`;
+	    	popUp.append(div);
+	    }
+        }
+
+    </script>
+</body>
+</html>

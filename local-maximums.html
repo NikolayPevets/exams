@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+	<style>
+		*{
+            margin: 0;
+            padding: 0;
+			color: white;
+        }
+        body{
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #D7A630;
+        }
+        form{
+            width: 70%;
+            height: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color:#C25F1B;
+            border-radius: 10px;
+			padding-bottom: 50px;
+        }
+        h1{
+            color: white;
+            font-size: 25px;
+            text-transform: uppercase;
+            text-align: center;
+            padding: 50px;
+        }
+        h2{
+			color: white;
+			padding: 50px;
+		}
+        #input{
+            width: 15vw;
+            height: 5vh;
+            border-radius: 10px 0px 0px 10px;
+			color: black;
+
+        }
+        .popup{
+            width: 60%;
+            height: 30%;
+            background-color: red;
+            position: fixed;
+            border-radius: 10px;
+            padding: 50px;
+            background-color: #9B1B1A;
+            color: white;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        }
+        .close{
+            cursor: pointer;
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            right: 0px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            top: 0px;
+            border-radius: 10px;
+            background-color: black;
+            z-index: 100;
+        }
+        #submit{
+            width: 15vw;
+            height: 6vh;
+            border-radius:  0px 10px 10px 0px;
+            color: white;
+            background-color:#083A5D;
+            font-size: 15px;
+            border: none;
+            cursor: pointer;
+            
+        }
+		.array{
+			font-size: 20px;
+		}
+		.max{
+			font-size: 20px;
+		}
+		.red{
+			color: red;
+		}
+	</style>
+</head>
+<body>
+	<form>
+        <h1>Нахождение локальных максимумов</h1>
+        <p><input name="text" type = 'textarea' id ='input'><input type="submit" value="Добавить в массив" name="submit" id = 'submit'></p>
+		<h2>Все элементы массива:</h2>
+		<div class="array"></div>
+		<h2>Кол-во локальных максимумов в массиве:</h2>
+		<div class="max"></div>
+    </form>
+
+	<script type="text/javascript">
+
+
+		let array = [];
+		let regExp = /^\d+$/;
+		let max = document.querySelector('.max');
+		let submit = document.forms[0].submit;
+		submit.addEventListener('click', calculateLocalMaximums);
+
+
+		function calculateLocalMaximums(e){
+			e.preventDefault();
+			let localMaximums = 0;
+			let number = +document.forms[0].text.value;
+			let allArrayValues = document.querySelector('.array');
+			
+			if(regExp.test(number)){
+				let newNumber = document.createElement('span');
+				newNumber.innerHTML = number + ', ';
+				allArrayValues.append(newNumber);
+				//allArrayValues.innerHTML = allArrayValues.innerHTML +  number + '  ';
+				array.push(number);
+				
+				
+			}
+			let arrayChildren = document.querySelectorAll('.array > span')
+			console.log(arrayChildren)
+			for(i = 0; i < array.length; i++){
+				if(array[i] > array[i - 1] && array[i] > array[i + 1]){
+					localMaximums = localMaximums + 1;
+					arrayChildren[i].classList.add('red');
+				}
+				
+			}
+			
+			max.innerHTML = localMaximums;
+		}
+
+
+	</script>
+</body>
+</html>
