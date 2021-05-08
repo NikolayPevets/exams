@@ -121,6 +121,7 @@
 		    let regExp = /^[а-яА-Я]{2,100}$/ 
             createPopUp();
 		if(regExp.test(word)){ 
+			word = word.toLowerCase();
 			let word2 = word.toLowerCase().split('').reverse().join('');
             let popUp = document.querySelector('.popup');
             let div = document.createElement('div');
